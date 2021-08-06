@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<!--titulo da cadastro de novo usuário-->
+<section>
+    <div class="container_title">
+        <h1>Cadastrar Novo Usuário</h1>
+    </div>
+</section>
+<!--Formulário de cadastro de usuário-->
+<section>
+    <form [formGroup]="formUsuarios">
+        <div class="grid-container"> 
+            <div>
+                <span>Email:</span>
+                <input formControlName="email" type="text" name="email">
+            </div>       
+            <div>
+                <span>Nome:</span>
+                <input formControlName="name" type="text" name="nome">
+            </div>
+            <div>
+                <span>Senha:</span>
+                <input formControlName="password" type="password" name="password">
+            </div>
+	        <div class="check"> 
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>              
+                <mat-checkbox class="checkbox">Administrador?</mat-checkbox> 
+            </div>            
+            <div>
+                <button mat-raised-button color="primary" (click)="save()">Salvar Usuário</button>
+            </div>
+        </div>
+    </form>                
+</section>
+

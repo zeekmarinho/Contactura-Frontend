@@ -1,0 +1,41 @@
+.container-login{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../assets/img/wallpaper.jpg');
+}
+
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+.example-card {
+    max-width: 500px;
+}
+  
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.alignButtonsCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.container-logo{
+    display: flex;
+    justify-content: center;
+
+    img{
+        width: 180px;
+    }
+}

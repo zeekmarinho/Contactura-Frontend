@@ -1,0 +1,22 @@
+<section class="container-login">
+    <mat-card class="example-card">
+        <mat-card-title class="container-logo">
+            <img src="../../assets/img/logo.png" alt="logo do site contactura">
+        </mat-card-title>
+        <mat-card-content>
+            <form class="example-form" [formGroup]="loginForm">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Username</mat-label>
+                    <input type="email" matInput formControlName="username">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password">
+                </mat-form-field>            
+            </form>      
+        </mat-card-content>
+        <mat-card-actions class="alignButtonsCenter">
+            <button mat-button (click)="login()" >Entrar</button>
+        </mat-card-actions>
+    </mat-card>
+</section>

@@ -1,0 +1,47 @@
+.container_title{
+    display:flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.grid-container{
+    display: grid;                          
+    grid-template-columns: auto auto;
+    grid-gap: 3.5em;
+    margin: 20px;
+    
+    input{
+        width: 100%;
+    }
+}
+
+.grid_container_email{
+    display: grid;                          
+    grid-template-columns: auto;
+    grid-gap: 2.5em;
+    margin: 20px;
+    
+    input{
+        width: 100%;
+    }
+}
+
+// Media query para desktop com o maximo de 767px
+
+@media screen and (max-width: 767px){
+
+    .container_title{
+        display:flex;
+        margin-top: 20px;
+        justify-content:center;
+    }
+
+    .grid-container{
+        display: grid;                          
+        grid-template-columns: auto;
+        grid-gap: 1.5em;
+        margin: 20px;    
+       
+    }    
+    
+}
