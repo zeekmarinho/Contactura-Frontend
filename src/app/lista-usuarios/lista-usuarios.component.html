@@ -5,3 +5,40 @@
         <h1>USUÁRIOS</h1>
     </div>
 </section>
+<!--boatão de adicionar contato-->
+<section>
+    <div class="container_buttons">
+        <button routerLink="/cadastro-contatos" mat-raised-button color="primary">Criar Contato</button>
+        <button routerLink="/cadastro-usuarios" mat-raised-button color="primary">Criar Usuário</button>
+    </div>
+</section>
+<!--lista de usuarios-->
+<section>
+    <div>
+        <table>
+            <!--thead-->
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Fone</th>
+                    <th>menu</th>
+                </tr>
+            </thead>
+            <!--tbody-->
+            <tbody>
+                <tr *ngFor="let user of userList">
+                    <td data-label="Nome">{{user.name}}</td>
+                    <td data-label="Email">{{user.email}}</td>
+                    <td data-label="Fone">{{user.phone}}</td>
+                    <td>
+                        <div class="container_buttons_table">
+                            <mat-icon (click)="deleteUser(user)">delete</mat-icon>
+                            <mat-icon (click)="editUsuarios(user)">edit</mat-icon>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

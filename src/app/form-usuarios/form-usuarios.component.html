@@ -11,7 +11,7 @@
         <div class="grid-container"> 
             <div>
                 <span>Email:</span>
-                <input formControlName="email" type="text" name="email">
+                <input formControlName="username" type="text" name="username">
             </div>       
             <div>
                 <span>Nome:</span>
@@ -26,7 +26,7 @@
                 <span></span>
                 <span></span>
                 <span></span>              
-                <mat-checkbox class="checkbox">Administrador?</mat-checkbox> 
+                <mat-checkbox class="checkbox" formControlName="admin">Administrador?</mat-checkbox> 
             </div>            
             <div>
                 <button mat-raised-button color="primary" (click)="save()">Salvar Usuário</button>

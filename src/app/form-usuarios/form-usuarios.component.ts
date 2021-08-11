@@ -16,7 +16,7 @@ export class FormUsuariosComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
-    admin: new FormControl('', [Validators.required])  
+    admin: new FormControl({value:false}, [])      
   })
 
   constructor(private router: Router, public usuariosService: UsuariosService) { }
@@ -26,7 +26,7 @@ export class FormUsuariosComponent implements OnInit {
       if(edit !== null){
         this.formUsuarios.get('name').setValue(edit.name);
         this.formUsuarios.get('username').setValue(edit.username);
-        this.formUsuarios.get('password').setValue(edit.password);
+        this.formUsuarios.get('password').setValue(edit.password);        
         this.formUsuarios.get('admin').setValue(edit.admin);
         //this.formContatos.get('id').setValue(edit.id);
       }
