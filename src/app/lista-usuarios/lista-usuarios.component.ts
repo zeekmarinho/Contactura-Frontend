@@ -12,24 +12,37 @@ import { UsuariosService } from '../service/usuarios/usuarios.service';
 export class ListaUsuariosComponent implements OnInit {
 
   userList: User[];
-  collection = {count: 10, data: []};
+  //collection = {count: 10, data: []};
   constructor(public usuariosService:UsuariosService, private router: Router) { }
 
   ngOnInit(): void { 
-    this.populateUser();   
+    this.getUsers();   
+  }
+
+  getUsers(){
+    this.usuariosService.getUser().subscribe(
+      data => {
+        this.userList = data;
+        console.log(data);
+      },
+      error => {
+        this.userList = [];
+        console.log(error);
+      }
+    );
   }
 
   //método para preencher os usuarios com dados mocados
-  populateUser(){
-    for (let i = 0; i < this.collection.count; i++) {
-      this.collection.data.push({
-        name: 'teste' + i,
-        email: 'email' + i + '@contactura.com' ,
-        phone: '(' + 0 + 8 + 1 + ')' + 9 + i + i + i + i + '-' + i + i + i + i
-      });
-    }
-    this.userList = this.collection.data;
-  }
+  //populateUser(){
+  //  for (let i = 0; i < this.collection.count; i++) {
+  //    this.collection.data.push({
+  //      name: 'teste' + i,
+  //      email: 'email' + i + '@contactura.com' ,
+  //      phone: '(' + 0 + 8 + 1 + ')' + 9 + i + i + i + i + '-' + i + i + i + i
+  //    });
+  //  }
+  //  this.userList = this.collection.data;
+  //}
 
   editUsuarios(usuarios: User){
     this.usuariosService.getUsersList(usuarios);
@@ -47,9 +60,14 @@ export class ListaUsuariosComponent implements OnInit {
       confirmButtonText: 'Sim',
       cancelButtonText: 'Não'
     }).then((result) => {
-      if(result.isConfirmed) {
-        Swal.fire(
-          'Usuario deletado com sucesso!',
+      if (result.isConfirmed) {
+        this.usuariosService.deleteUser(usuarios.id).subscribe(
+          data => {
+            Swal.fire(
+              String(data),
+            );
+            this.getUsers();
+          }
         );
       }
     });

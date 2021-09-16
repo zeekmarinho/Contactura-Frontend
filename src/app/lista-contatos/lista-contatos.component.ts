@@ -12,24 +12,37 @@ import { ContatosService } from '../service/contatos/contatos.service';
 export class ListaContatosComponent implements OnInit {
 
   contactsList: Contacts[];
-  collection = {count: 10, data: []};
+  //collection = {count: 10, data: []};
   constructor(public contatosService: ContatosService, private router: Router) { }
 
   ngOnInit(): void {
-    this.populateContacts();
+    this.getContacts();
+  }
+
+  getContacts(){
+    this.contatosService.getContacts().subscribe(
+      data => {
+        this.contactsList = data;
+        console.log(data);
+      },
+      error => {
+        this.contactsList = [];
+        console.log(error);
+      }
+    );
   }
 
   //método para preencher os contatos com dados mocados
-  populateContacts(){
-    for (let i = 0; i < this.collection.count; i++) {
-      this.collection.data.push({
-        name: 'teste' + i,
-        email: 'email' + i + '@contactura.com' ,
-        phone: '(' + 0 + 8 + 1 + ')' + 9 + i + i + i + i + '-' + i + i + i + i
-      });
-    }
-    this.contactsList = this.collection.data;
-  }
+  //populateContacts(){
+  //  for (let i = 0; i < this.collection.count; i++) {
+  //    this.collection.data.push({
+  //      name: 'teste' + i,
+  //      email: 'email' + i + '@contactura.com' ,
+  //      phone: '(' + 0 + 8 + 1 + ')' + 9 + i + i + i + i + '-' + i + i + i + i
+  //    });
+  //  }
+  //  this.contactsList = this.collection.data;
+  //}
 
   editContatos(contatos: Contacts){
     this.contatosService.getContactsList(contatos);
@@ -47,9 +60,14 @@ export class ListaContatosComponent implements OnInit {
       confirmButtonText: 'Sim',
       cancelButtonText: 'Não'
     }).then((result) => {
-      if(result.isConfirmed) {
-        Swal.fire(
-          'Deletado com sucesso!',
+      if (result.isConfirmed) {
+        this.contatosService.deleteContacts(contatos.id).subscribe(
+          data => {
+            Swal.fire(
+              String(data),
+            );
+            this.getContacts();
+          }
         );
       }
     });

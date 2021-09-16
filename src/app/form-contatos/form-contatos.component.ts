@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Contacts } from '../models/contacts';
 import { ContatosService } from '../service/contatos/contatos.service';
 
 @Component({
@@ -18,6 +19,8 @@ export class FormContatosComponent implements OnInit {
     phone: new FormControl('', [Validators.required])  
   })
 
+  contact: Contacts;
+
   constructor(private router: Router, public contatosService: ContatosService) { }
 
   ngOnInit(): void {
@@ -31,21 +34,65 @@ export class FormContatosComponent implements OnInit {
     });
   }
 
-  save(){
-    if(this.formContatos.valid){
-      Swal.fire({
-        icon: 'success',
-        title: 'Eeeeeba..',
-        text: 'Contato criado com sucesso!'
-      });
-      this.router.navigate(['/lista-contatos']);
+  validation(){
+    if (this.formContatos.valid){
+      if (this.contact){
+        this.edit(this.contact);
+      }else{
+        this.create();
+      }
     }else{
       Swal.fire({
         icon: 'error',
         title: 'Ooooops..',
-        text: 'Cadastro não realizado, ' + 'preencha corretamente todos os campos'
+        text: 'Cadastro não realizado,' +
+        'preencha corretamente todos os campos'
       });
     }
   }
+
+  edit(contact: Contacts){
+    contact.name =  this.formContatos.get('name').value;
+    contact.phone = this.formContatos.get('phone').value;
+    contact.email =  this.formContatos.get('email').value;
+    this.contatosService.updateContacts(contact).subscribe(
+      data => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Eeeeeba..',
+          text: 'Contato editado com sucesso!'
+        });
+        this.router.navigate(['/lista-contatos']);
+        },
+        error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ooops..',
+            text: 'Erro ao editar contato!'
+          });
+        }
+    );
+  }
+
+  create(){
+    this.contatosService.createContacts(this.formContatos.value).subscribe(
+      data => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Eeeeeba..',
+          text: 'Contato criado com sucesso!'
+        });
+        this.router.navigate(['/lista-contatos']);
+        },
+        error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ooops..',
+            text: 'Erro ao criar contato!'
+          });
+        }
+    );
+  }
+  
 
 }

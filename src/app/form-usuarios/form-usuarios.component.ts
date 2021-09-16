@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { User } from '../models/user';
 import { UsuariosService } from '../service/usuarios/usuarios.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class FormUsuariosComponent implements OnInit {
     admin: new FormControl({value:false}, [])      
   })
 
+  user: User;
+
   constructor(private router: Router, public usuariosService: UsuariosService) { }
 
   ngOnInit(): void {
@@ -33,21 +36,65 @@ export class FormUsuariosComponent implements OnInit {
     });
   }
 
-  save(){
-    if(this.formUsuarios.valid){
-      Swal.fire({
-        icon: 'success',
-        title: 'Eeeeeba..',
-        text: 'Usuario criado com sucesso!'
-      });
-      this.router.navigate(['/lista-usuarios']);
+  validation(){
+    if (this.formUsuarios.valid){
+      if (this.user){
+        this.edit(this.user);
+      }else{
+        this.create();
+      }
     }else{
       Swal.fire({
         icon: 'error',
         title: 'Ooooops..',
-        text: 'Cadastro não realizado, ' + 'preencha corretamente todos os campos'
+        text: 'Cadastro não realizado,' +
+        'preencha corretamente todos os campos'
       });
     }
   }
+
+  edit(user: User){
+    user.name =  this.formUsuarios.get('name').value;
+    user.username = this.formUsuarios.get('username').value;
+    user.password =  this.formUsuarios.get('password').value;
+    user.admin =  this.formUsuarios.get('true').value;
+    this.usuariosService.updateUser(user).subscribe(
+      data => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Eeeeeba..',
+          text: 'Usuario editado com sucesso!'
+        });
+        this.router.navigate(['/lista-usuarios']);
+        },
+        error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ooops..',
+            text: 'Erro ao editar usuario!'
+          });
+        }
+    );
+  }
+
+  create(){
+    this.usuariosService.createUser(this.formUsuarios.value).subscribe(
+      data => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Eeeeeba..',
+          text: 'Usuario criado com sucesso!'
+        });
+        this.router.navigate(['/lista-usuarios']);
+        },
+        error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ooops..',
+            text: 'Erro ao criar usuario!'
+          });
+        }
+    );
+  } 
 
 }
